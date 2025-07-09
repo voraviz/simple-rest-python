@@ -1,5 +1,4 @@
-# Use Python 3.11 slim image as base
-FROM python:3.11-slim
+FROM registry.redhat.io/ubi9/python-312:latest
 
 # Set working directory
 WORKDIR /app
@@ -9,10 +8,10 @@ ENV PYTHONUNBUFFERED=1
 ENV PYTHONDONTWRITEBYTECODE=1
 
 # Install system dependencies
-RUN apt-get update && apt-get install -y \
-    --no-install-recommends \
-    gcc \
-    && rm -rf /var/lib/apt/lists/*
+# RUN apt-get update && apt-get install -y \
+#     --no-install-recommends \
+#     gcc \
+#     && rm -rf /var/lib/apt/lists/*
 
 # Create requirements.txt
 COPY requirements.txt .
@@ -24,11 +23,11 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY app.py .
 
 # Create non-root user for security
-RUN useradd --create-home --shell /bin/bash appuser && \
-    chown -R appuser:appuser /app
+# RUN useradd --create-home --shell /bin/bash appuser && \
+#     chown -R appuser:appuser /app
 
 # Switch to non-root user
-USER appuser
+USER 1001
 
 # Expose port 5000
 EXPOSE 5000
