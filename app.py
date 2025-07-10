@@ -1,9 +1,10 @@
 import os
-import requests
+import requests # type: ignore
 import time
-from flask import Flask, jsonify, request
-from prometheus_client import Counter, Histogram, Gauge, generate_latest, CONTENT_TYPE_LATEST
+from flask import Flask, jsonify, request # type: ignore
+from prometheus_client import Counter, Histogram, Gauge, generate_latest, CONTENT_TYPE_LATEST # type: ignore
 import logging
+from waitress import serve
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -195,4 +196,5 @@ if __name__ == '__main__':
     port = int(os.getenv('PORT', 5000))
     debug = os.getenv('DEBUG', 'false').lower() == 'true'
     
-    app.run(host='0.0.0.0', port=port, debug=debug)
+    #app.run(host='0.0.0.0', port=port, debug=debug)
+    serve(app, host="0.0.0.0", port=port)
