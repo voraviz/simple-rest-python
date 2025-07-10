@@ -37,5 +37,44 @@ The application is configured using the following environment variables:
 | `BACKEND` | **Yes**  | The full URL of the backend service to proxy requests to. | `null`  |
 | `PORT`    | No       | The port to run the application on.                    | `5000`  |
 
+Example
+
+- Run
+  
+```bash
+podman run -p 5000:5000 --rm -it -e BACKEND=https://httpbin.org/anything quay.io/voravitl/simple-rest-python:latest
+```
+
+- Test
+
+```bash
+curl http://localhost:5000/api?app=123 | jq
+```
+
+Output
+
+```json
+{
+  "args": {
+    "app": "123"
+  },
+  "data": "",
+  "files": {},
+  "form": {},
+  "headers": {
+    "Accept": "*/*",
+    "Accept-Encoding": "gzip, deflate",
+    "Host": "httpbin.org",
+    "User-Agent": "API-Proxy-Service/1.0",
+    "X-Amzn-Trace-Id": "Root=1-686f1f88-50416acb73a1601c0cf65341"
+  },
+  "json": null,
+  "method": "GET",
+  "origin": "49.228.107.140",
+  "url": "https://httpbin.org/anything?app=123"
+}
+```
+
+
 
 This code is mostly wrote by Claude and Gemini
